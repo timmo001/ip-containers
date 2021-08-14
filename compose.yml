@@ -1,0 +1,32 @@
+---
+version: "3.9"
+
+services:
+  core:
+    container_name: ip-core
+    image: ghcr.io/timmo001/ip-core/amd64:edge
+    restart: unless-stopped
+    ports:
+      - target: 5686
+        host_ip: 127.0.0.1
+        published: 5686
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: ip-data
+        target: /root/.local/share/ip-data
+  backend:
+    container_name: ip-backend
+    image: ghcr.io/timmo001/ip-backend/amd64:edge
+    restart: unless-stopped
+    ports:
+      - target: 5684
+        published: 5684
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: ip-data
+        target: /root/.local/share/ip-data
+
+volumes:
+  ip-data: {}
