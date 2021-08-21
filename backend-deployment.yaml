@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: backend
+    spec:
+      containers:
+        - env:
+            - name: CORE_HOST
+              value: ip-core
+          image: ghcr.io/timmo001/ip-backend/amd64:edge
+          name: ip-backend
+          ports:
+            - containerPort: 5684
+          resources: {}
+          volumeMounts:
+            - mountPath: /root/.local/share/ip-data
+              name: ip-data
+      restartPolicy: Always
+      volumes:
+        - name: ip-data
+          persistentVolumeClaim:
+            claimName: ip-data
+status: {}
