@@ -29,6 +29,14 @@ services:
       - type: volume
         source: ip-data
         target: /root/.local/share/ip-data
+  frontend:
+    container_name: ip-frotend
+    image: ghcr.io/timmo001/ip-frontend/amd64:edge
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
 
 volumes:
   ip-data: {}
