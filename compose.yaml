@@ -27,7 +27,7 @@ services:
         source: ip-data
         target: /root/.local/share/ip-data
   frontend:
-    container_name: ip-frotend
+    container_name: ip-frontend
     image: ghcr.io/timmo001/ip-frontend/amd64:edge
     restart: unless-stopped
     ports:
